@@ -1,6 +1,6 @@
 // Log __dirname and __filename
 console.log(`__dirname: ${__dirname}`);
-console.log(`__flename: ${__filename}`); 
+console.log(`__filename: ${__filename}`); 
 
 // Log process ID and platform
 console.log(`Process ID: ${process.pid}`); 
