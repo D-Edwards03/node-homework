@@ -21,8 +21,14 @@ document.getElementById('getTimeBtn').addEventListener('click', async () => {
 `;
 
 const server = http.createServer((req, res) => {
-  if (req.method === "GET" && req.url === "/time") {
+    // Manual routing
+    // Express makes this easier with simple methods
+    if (req.method === "GET" && req.url === "/time") {
+    // Manual headers
+    // Express handles this automatically when you use res.json()
     res.writeHead(200, { "Content-Type": "application/json" });
+    // Manual data formatting - manually stringify JS objects
+    // Express res.json() stringifies the payload
     res.end(
       JSON.stringify({
         time: new Date().toString(),
@@ -34,6 +40,8 @@ const server = http.createServer((req, res) => {
   } else if (req.method === "POST" && req.url === "/echo") {
     let body = "";
 
+    // Manual body parsing
+    // Express replaces this with app.use(express.json())
     req.on("data", (chunk) => {
       body += chunk;
     });
@@ -49,6 +57,7 @@ const server = http.createServer((req, res) => {
       );
     });
   } else {
+    // Manual 404 handling
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(
       JSON.stringify({
