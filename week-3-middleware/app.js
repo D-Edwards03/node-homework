@@ -2,7 +2,6 @@ const express = require("express");
 const { randomUUID } = require("crypto");
 const path = require("path");
 const dogsRouter = require("./routes/dogs");
-const { error } = require("console");
 
 const app = express();
 

@@ -1,5 +1,4 @@
 const express = require("express");
-const path = require("path");
 const dogs = require("../dogData");
 
 const router = express.Router();
@@ -27,10 +26,6 @@ router.get("/error", (req, res, next) => {
   next(new Error("Test error"));
 });
 
-router.get("/images/dachshund.png", (req, res) => {
-  const imagePath = path.join(__dirname, "../public/images/dachshund.png");
-  res.sendFile(imagePath);
-})
 
 module.exports = router;
 
