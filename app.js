@@ -1,33 +1,41 @@
 const express = require("express");
-
 const app = express();
 
-// Replaces the manual work and JSON.parse() logic in sampleHTTP.js
-// Automatically parses incoming JSON payloads for Post/Put req
+// Import routers and middlewares
+const timeRouter = require("./routes/timeRoutes");
+const userRouter = require("./routes/userRoutes");
+const notFound = require("./middleware/not-found");
+const errorHandler = require("./middleware/error-handler");
+
+// Initialize globals
+global.user_id = null;
+global.users = [];
+global.tasks = [];
+
+// Body parsing middleware
 app.use(express.json());
 
-// Don't need to use if/else statements to check the URL and method
-// Use .get() for GET req and specify the path
+// Routes
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
 app.post("/testpost", (req, res) => {
-    // res.json() automatically sets the Content-Type header to app/json
-    // and stringifies the JavaScript object
   res.status(200).json({
     message: "POST route works",
   });
 });
 
-const port = process.env.PORT || 3000;
+app.use("/api", timeRouter);
+app.use("/api/users", userRouter);
 
+app.use(notFound);
+app.use(errorHandler);
+
+const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`Server is listening on port ${port}...`);
 });
 
-const timeRouter = require("./routes/timeRoutes");
-
-app.use("/api", timeRouter);
 
 module.exports = { app, server };
