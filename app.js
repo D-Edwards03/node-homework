@@ -4,8 +4,11 @@ const app = express();
 // Import routers and middlewares
 const timeRouter = require("./routes/timeRoutes");
 const userRouter = require("./routes/userRoutes");
+const taskRouter = require("./routes/taskRoutes");
 const notFound = require("./middleware/not-found");
 const errorHandler = require("./middleware/error-handler");
+const authMiddleware = require("./middleware/auth");
+
 
 // Initialize globals
 global.user_id = null;
@@ -28,6 +31,7 @@ app.post("/testpost", (req, res) => {
 
 app.use("/api", timeRouter);
 app.use("/api/users", userRouter);
+app.use("/api/tasks", authMiddleware, taskRouter);
 
 app.use(notFound);
 app.use(errorHandler);
